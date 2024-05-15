@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tableex.css') }}" />
+    <title>TabLeex</title>
+</head>
+
+<body>
+    <div id="tableex-wrapper">
+        <table id="tableex" tableex-box-selectable tableex-column-resortable>
+            <thead>
+                <tr>
+                    <th>header1</th>
+                    <th>header2</th>
+                    <th>header3</th>
+                    <th>header4</th>
+                    <th>header5</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>test1</td>
+                    <td>1</td>
+                    <td>AA</td>
+                    <td>AA2</td>
+                    <td>AA3</td>
+                </tr>
+                <tr>
+                    <td>test2</td>
+                    <td>2</td>
+                    <td>BB</td>
+                    <td>BB2</td>
+                    <td>BB3</td>
+                </tr>
+                <tr>
+                    <td>test3</td>
+                    <td>2</td>
+                    <td>CC</td>
+                    <td>CC2</td>
+                    <td>CC3</td>
+                </tr>
+                <tr>
+                    <td>testX</td>
+                    <td>X</td>
+                    <td>XX</td>
+                    <td>XX2</td>
+                    <td>XX3</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/tableex.js') }}"></script>
+</body>
+
+</html>
