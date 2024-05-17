@@ -213,10 +213,10 @@ class BoxSelector {
         if (nextFunc) {
             let moveFunc = event.ctrlKey ? this.getNextTerminalCell : this.getNextCell;
             if (!event.shiftKey) {
-                this.selectionStartCell = this.selectionEndCell = moveFunc.bind(this)(nextFunc, this.selectionStartCell)
+                this.selectionStartCell = this.selectionEndCell = moveFunc.bind(this)(nextFunc, this.selectionStartCell);
             }
             else {
-                this.selectionEndCell = moveFunc.bind(this)(nextFunc, this.selectionEndCell)
+                this.selectionEndCell = moveFunc.bind(this)(nextFunc, this.selectionEndCell);
             }
             
             this.highlightSelection();
@@ -245,7 +245,7 @@ class BoxSelector {
             prevCell = currentCell;
             currentCell = this.getNextCell(func, currentCell);
         }
-        return currentCell
+        return currentCell;
     }
 
     getSelectionText() {
