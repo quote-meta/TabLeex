@@ -41,7 +41,7 @@ class ColumnResorter {
         Array.from(rows).forEach(row => {
             const cells = row.cells;
             const temp = cells[draggedColumnIndex].innerHTML;
-    
+
             if (draggedColumnIndex < droppedColumnIndex) {
                 for (let i = draggedColumnIndex; i < droppedColumnIndex; i++) {
                     cells[i].innerHTML = cells[i + 1].innerHTML;
@@ -95,8 +95,8 @@ class BoxSelector {
             cell.addEventListener('dragenter', this.handleDragEnter);
             cell.addEventListener('dragover', this.handleDragOver);
             cell.addEventListener('dragend', this.handleDragEnd);
-            window.addEventListener('keydown', this.handleKeyDown); // HACK
         })
+        window.addEventListener('keydown', this.handleKeyDown);
         window.addEventListener('click', this.handleResetSelection);
         window.addEventListener('dragstart', this.handleResetSelection);
     }
@@ -195,11 +195,57 @@ class BoxSelector {
     }
 
     handleKeyDown = event => {
+        let nextFunc = null;
+        switch (event.key) {
+            case "ArrowDown":
+                nextFunc = (cell) => cell.parentElement.nextElementSibling?.cells[cell.cellIndex];
+                break;
+            case "ArrowUp":
+                nextFunc = (cell) => cell.parentElement.previousElementSibling?.cells[cell.cellIndex];
+                break;
+            case "ArrowLeft":
+                nextFunc = (cell) => cell.previousElementSibling;
+                break;
+            case "ArrowRight":
+                nextFunc = (cell) => cell.nextElementSibling;
+                break;
+        }
+        if (nextFunc) {
+            let moveFunc = event.ctrlKey ? this.getNextTerminalCell : this.getNextCell;
+            if (!event.shiftKey) {
+                this.selectionStartCell = this.selectionEndCell = moveFunc.bind(this)(nextFunc, this.selectionStartCell)
+            }
+            else {
+                this.selectionEndCell = moveFunc.bind(this)(nextFunc, this.selectionEndCell)
+            }
+            
+            this.highlightSelection();
+        }
+
         if (event.ctrlKey && event.key === 'c') {
             if (this.isSelecting) {
                 this.copyToClipboard(this.getSelectionText());
             }
         }
+    }
+
+    getNextCell(func, currentCell) {
+        let possibleEndCell = func(currentCell);
+        if (possibleEndCell) {
+            return possibleEndCell;
+        }
+        else {
+            return currentCell;
+        }
+    }
+
+    getNextTerminalCell(func, currentCell) {
+        let prevCell = null;
+        while(prevCell !== currentCell) {
+            prevCell = currentCell;
+            currentCell = this.getNextCell(func, currentCell);
+        }
+        return currentCell
     }
 
     getSelectionText() {
@@ -302,7 +348,7 @@ class BoxSelector {
     }
 
     handleResetSelection = event => {
-        if(event.target.tagName === 'TD'){
+        if (event.target.tagName === 'TD') {
             return;
         }
         this.isDragging = false;
