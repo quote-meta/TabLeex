@@ -219,7 +219,9 @@ class BoxSelector {
                 this.selectionEndCell = moveFunc.bind(this)(nextFunc, this.selectionEndCell);
             }
             
+            this.followCell(this.selectionEndCell);
             this.highlightSelection();
+            event.preventDefault();
         }
 
         if (event.ctrlKey && event.key === 'c') {
@@ -295,6 +297,28 @@ class BoxSelector {
             content.select();
             document.execCommand('copy');
         }
+    }
+
+    followCell(cell) {
+        const rect = cell.getBoundingClientRect();
+
+        let block = "nearest"
+        let inline = "nearest"
+
+        if (rect.top < 0) {
+            block = "start";
+        }
+        else if (rect.bottom > (window.innerHeight || document.documentElement.clientHeight)) {
+            block = "end";
+        }
+
+        if (rect.left < 0) {
+            inline = "start";
+        }
+        else if (rect.right > (window.innerWidth || document.documentElement.clientWidth)) {
+            inline = "end";
+        }
+        cell.scrollIntoView({ block: block, inline: inline});
     }
 
     startVerticalScroll(direction) {
