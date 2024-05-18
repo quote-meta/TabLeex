@@ -2,6 +2,7 @@ body {
     font-family: Helvetica;
     -webkit-font-smoothing: antialiased;
     background: rgb(212, 226, 241);
+    width: max-content;
 }
 
 #tableex-wrapper {
@@ -15,7 +16,6 @@ table#tableex {
     font-weight: normal;
     border: none;
     border-collapse: collapse;
-    width: 100%;
     white-space: nowrap;
     background-color: white;
 }
