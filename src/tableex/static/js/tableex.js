@@ -196,6 +196,7 @@ class BoxSelector {
 
     handleKeyDown = event => {
         let nextFunc = null;
+        // follow selecting cell move
         switch (event.key) {
             case "ArrowDown":
                 nextFunc = (cell) => cell.parentElement.nextElementSibling?.cells[cell.cellIndex];
@@ -224,6 +225,12 @@ class BoxSelector {
             event.preventDefault();
         }
 
+        // select all
+        if (event.ctrlKey && event.key === 'a') {
+            this.selectAllCell();
+        }
+
+        // copy
         if (event.ctrlKey && event.key === 'c') {
             if (this.isSelecting) {
                 this.copyToClipboard(this.getSelectionText());
@@ -286,6 +293,14 @@ class BoxSelector {
             firstCell = true;
         }
         return selectingText;
+    }
+
+    selectAllCell() {
+        this.isSelecting = true;
+        const cells = this._table.getElementsByTagName('td');
+        this.selectionStartCell = cells[0];
+        this.selectionEndCell = cells[cells.length - 1];
+        this.highlightSelection();
     }
 
     copyToClipboard(content) {
