@@ -2,10 +2,11 @@ body {
     font-family: Helvetica;
     -webkit-font-smoothing: antialiased;
     background: rgb(212, 226, 241);
-    width: max-content;
 }
 
 #tableex-wrapper {
+    overflow: auto;
+    height: 80vh;
     margin: 10px 70px 70px;
     box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
 }
@@ -21,6 +22,9 @@ table#tableex {
 }
 
 table#tableex th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
     text-align: center;
     padding: 8px;
     white-space: nowrap;

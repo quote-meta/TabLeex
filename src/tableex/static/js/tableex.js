@@ -318,6 +318,13 @@ class BoxSelector {
         else if (rect.right > (window.innerWidth || document.documentElement.clientWidth)) {
             inline = "end";
         }
+        // set scroll-margin-top
+        const header = this._table.getElementsByTagName('th')[cell.cellIndex];
+        if(header) {
+            const height = header.offsetHeight;
+            cell.style.scrollMarginTop = height + "px";
+        }
+
         cell.scrollIntoView({ block: block, inline: inline});
     }
 
